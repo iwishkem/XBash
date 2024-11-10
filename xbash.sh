@@ -10,7 +10,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
     mkdir -p "$(dirname "$CONFIG_FILE")"
 
     cat <<EOF > "$CONFIG_FILE"
-UPLOAD_URL="https://sxcu.net/api/files/create"
+UPLOAD_URL="https://im-a-loser.pleasedontbully.me/api/files/create"
 TOKEN="your-api-token-here"
 EOF
 
