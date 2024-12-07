@@ -3,6 +3,20 @@
 CONFIG_FILE="$HOME/.config/XBash/config.cfg"
 LOG_DIRECTORY="$HOME/.config/XBash"
 LOG="$LOG_DIRECTORY/XBash.log"
+show_gui=false
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --gui)
+            show_gui=true
+            shift
+            ;;
+        *)
+            IMAGE_PATH="$1"
+            shift
+            ;;
+    esac
+done
 
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "Error: Configuration file $CONFIG_FILE not found!"
@@ -10,7 +24,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
     mkdir -p "$(dirname "$CONFIG_FILE")"
 
     cat <<EOF > "$CONFIG_FILE"
-UPLOAD_URL="https://im-a-loser.pleasedontbully.me/api/files/create"
+UPLOAD_URL="https://sxcu.net/api/files/create"
 TOKEN="your-api-token-here"
 EOF
 
@@ -25,13 +39,11 @@ if [ -z "$UPLOAD_URL" ] || [ -z "$TOKEN" ]; then
     exit 1
 fi
 
-IMAGE_PATH="$1"
-
 command -v jq >/dev/null 2>&1 || { echo "jq is required but not installed."; exit 1; }
 command -v xclip >/dev/null 2>&1 || { echo "xclip is required but not installed."; exit 1; }
 
 if [ -z "$IMAGE_PATH" ]; then
-    echo "Usage: $0 <image_path>"
+    echo "Usage: $0 [--gui] <image_path>"
     exit 1
 fi
 
@@ -44,7 +56,6 @@ RESPONSE=$(curl -s -X POST "$UPLOAD_URL" \
     -F "file=@$IMAGE_PATH" \
     -F "token=$TOKEN")
 
-
 if echo "$RESPONSE" | jq -e .url > /dev/null; then
     IMAGE_URL=$(echo "$RESPONSE" | jq -r .url)
     DEL_URL=$(echo "$RESPONSE" | jq -r .del_url)
@@ -52,17 +63,14 @@ if echo "$RESPONSE" | jq -e .url > /dev/null; then
     echo "$IMAGE_URL" | xclip -selection clipboard
     echo "Delete Link: $DEL_URL"
     mkdir -p "$LOG_DIRECTORY"
-    echo "-------------------------
-$(date '+%x %X')
-Link: $IMAGE_URL
-Delete: $DEL_URL" >> "$LOG"
+    echo "-------------------------\n$(date '+%x %X')\nLink: $IMAGE_URL\nDelete: $DEL_URL" >> "$LOG"
 
-    zenity --info --title="Screenshot uploaded" --text="Link: <a href='$IMAGE_URL'>$IMAGE_URL</a>
-Delete: <a href='$DEL_URL'>$DEL_URL</a>
-
-Link copied to clipboard. Links stored in:
-$LOG"
+    if $show_gui; then
+        zenity --info --title="Screenshot uploaded" --text="Link: <a href='$IMAGE_URL'>$IMAGE_URL</a>\nDelete: <a href='$DEL_URL'>$DEL_URL</a>\n\nLink copied to clipboard. Links stored in:\n$LOG"
+    fi
 else
     echo "Error uploading image."
-    zenity --error --text="Failed to upload screenshot"
+    if $show_gui; then
+        zenity --error --text="Failed to upload screenshot"
+    fi
 fi
