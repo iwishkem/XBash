@@ -24,7 +24,7 @@ XBash is a Bash script that uploads an image file to a specified server and copi
 
    ```bash
    chmod +x xbash.sh
-   ./xbash.sh <image_path>
+   ./xbash.sh <image_path> or ./xbash.sh --gui <image_path>
    ```
 
    If this is the first time running the script, it will generate a configuration file at `$HOME/.config/XBash/config.cfg` instead of uploading the image.
