@@ -63,7 +63,11 @@ if echo "$RESPONSE" | jq -e .url > /dev/null; then
     echo "$IMAGE_URL" | xclip -selection clipboard
     echo "Delete Link: $DEL_URL"
     mkdir -p "$LOG_DIRECTORY"
-    echo "-------------------------\n$(date '+%x %X')\nLink: $IMAGE_URL\nDelete: $DEL_URL" >> "$LOG"
+    echo "-------------------------
+$(date '+%x %X')
+Link: $IMAGE_URL
+Delete: $DEL_URL
+    " >> "$LOG"
 
     if $show_gui; then
         zenity --info --title="Screenshot uploaded" --text="Link: <a href='$IMAGE_URL'>$IMAGE_URL</a>\nDelete: <a href='$DEL_URL'>$DEL_URL</a>\n\nLink copied to clipboard. Links stored in:\n$LOG"
