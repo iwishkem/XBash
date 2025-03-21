@@ -4,7 +4,7 @@ CONFIG_FILE="$HOME/.config/XBash/config.cfg"
 LOG_DIRECTORY="$HOME/.config/XBash"
 LOG="$LOG_DIRECTORY/XBash.log"
 show_gui=false
-VERSION="1.0.0"
+VERSION="1.0.1"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -23,6 +23,24 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+# Skip update check if GUI mode is enabled
+if ! $show_gui; then
+    LATEST_VERSION=$(curl -s https://raw.githubusercontent.com/iwishkem/XBash/main/version)
+    if [ "$VERSION" != "$LATEST_VERSION" ]; then
+        echo "A new version ($LATEST_VERSION) is available. You are using version $VERSION."
+        read -p "Do you want to update now? (y/n): " confirm
+        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+            echo "Updating to version $LATEST_VERSION..."
+            curl -o "$HOME/.local/bin/xbash" https://raw.githubusercontent.com/iwishkem/XBash/main/latest
+            chmod +x "$HOME/.local/bin/xbash"
+            echo "Update complete! Please restart the script."
+            exit 0
+        else
+            # echo "Skipping update."
+        fi
+    fi
+fi
+
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "Error: Configuration file $CONFIG_FILE not found!"
     echo "Please run the install script to create the configuration file."
@@ -40,7 +58,7 @@ command -v jq >/dev/null 2>&1 || { echo "jq is required but not installed."; exi
 command -v xclip >/dev/null 2>&1 || { echo "xclip is required but not installed."; exit 1; }
 
 if [ -z "$IMAGE_PATH" ]; then
-    echo "Usage: $0 [--gui] <image_path>"
+    echo "Usage: $0 [--gui|-g] <image_path>"
     exit 1
 fi
 

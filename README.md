@@ -5,7 +5,7 @@ XBash is a Bash script that uploads an image file to a specified server and copi
 ## Features
 
 - Checks for a configuration file (`config.cfg`), creates a sample one if not found.
-- Uploads an image to a specified URL, using the URL and tsoken provided in the configuration.
+- Uploads an image to a specified URL, using the URL and token provided in the configuration.
 - Copies the upload link to the clipboard and displays the link via a Zenity dialog.
 - Logs all uploaded image URLs and deletion links.
 
@@ -16,6 +16,16 @@ XBash is a Bash script that uploads an image file to a specified server and copi
 - `jq` - for parsing JSON responses
 - `xclip` - for copying to the clipboard
 - `zenity` - for GUI dialogs
+
+### Supported Linux Distributions
+
+The script supports the following Linux distributions for automatic package installation:
+
+- Ubuntu/Debian (via `apt-get`)
+- Fedora/CentOS/RHEL (via `yum`)
+- Arch Linux (via `pacman`)
+
+For unsupported distributions, you must manually install the required packages.
 
 ## Installation
 
@@ -32,14 +42,11 @@ XBash is a Bash script that uploads an image file to a specified server and copi
    ./install.sh
    ```
 
-   This will copy the script to `$HOME/.local/bin/xbash` and create a configuration file at `$HOME/.config/XBash/config.cfg` if it doesn't already exist.
-
-3. **Add `$HOME/.local/bin` to your PATH** (if not already done):
-
-   ```bash
-   echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-   source ~/.bashrc
-   ```
+   This will:
+   - Install required packages (`curl`, `jq`, `xclip`, `zenity`) based on your Linux distribution.
+   - Copy the script to `$HOME/.local/bin/xbash`.
+   - Create a configuration file at `$HOME/.config/XBash/config.cfg` if it doesn't already exist.
+   - Automatically add $HOME/.local/bin to your PATH if it is not already included.
 
 ## Usage
 
