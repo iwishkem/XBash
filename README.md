@@ -32,13 +32,14 @@ For unsupported distributions, you must manually install the required packages.
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/XBash.git
+   git clone https://github.com/iwishkem/XBash.git
    cd XBash
    ```
 
 2. **Run the install script**:
 
    ```bash
+   chmod +x install.sh
    ./install.sh
    ```
 
