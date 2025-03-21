@@ -5,7 +5,7 @@ XBash is a Bash script that uploads an image file to a specified server and copi
 ## Features
 
 - Checks for a configuration file (`config.cfg`), creates a sample one if not found.
-- Uploads an image to a specified URL, using the URL and token provided in the configuration.
+- Uploads an image to a specified URL, using the URL and tsoken provided in the configuration.
 - Copies the upload link to the clipboard and displays the link via a Zenity dialog.
 - Logs all uploaded image URLs and deletion links.
 
@@ -19,17 +19,52 @@ XBash is a Bash script that uploads an image file to a specified server and copi
 
 ## Installation
 
-1. **Download the script** to your desired directory.
-2. **Make the script executable**:
+1. **Clone the repository**:
 
    ```bash
-   chmod +x xbash.sh
-   ./xbash.sh <image_path> or ./xbash.sh --gui <image_path>
+   git clone https://github.com/your-username/XBash.git
+   cd XBash
    ```
 
-   If this is the first time running the script, it will generate a configuration file at `$HOME/.config/XBash/config.cfg` instead of uploading the image.
+2. **Run the install script**:
+
+   ```bash
+   ./install.sh
+   ```
+
+   This will copy the script to `$HOME/.local/bin/xbash` and create a configuration file at `$HOME/.config/XBash/config.cfg` if it doesn't already exist.
+
+3. **Add `$HOME/.local/bin` to your PATH** (if not already done):
+
+   ```bash
+   echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+
+## Usage
+
+Run the script with the following syntax:
+
+```bash
+xbash <image_path>
+```
+
+For GUI mode:
+
+```bash
+xbash --gui <image_path>
+```
+
+To check the version:
+
+```bash
+xbash --version
+```
+
+If this is the first time running the script, it will generate a configuration file at `$HOME/.config/XBash/config.cfg` instead of uploading the image.
 
 ## Configuration
+
 ### Customizing Configuration
 
 You can modify `config.cfg` to set your own `UPLOAD_URL` and `TOKEN` values.

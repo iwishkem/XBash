@@ -4,10 +4,15 @@ CONFIG_FILE="$HOME/.config/XBash/config.cfg"
 LOG_DIRECTORY="$HOME/.config/XBash"
 LOG="$LOG_DIRECTORY/XBash.log"
 show_gui=false
+VERSION="1.0.0"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --gui)
+        --version|-v)
+            echo "XBash version $VERSION"
+            exit 0
+            ;;
+        --gui|-g)
             show_gui=true
             shift
             ;;
@@ -20,15 +25,7 @@ done
 
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "Error: Configuration file $CONFIG_FILE not found!"
-    echo "Creating an example config file..."
-    mkdir -p "$(dirname "$CONFIG_FILE")"
-
-    cat <<EOF > "$CONFIG_FILE"
-UPLOAD_URL="https://sxcu.net/api/files/create"
-TOKEN="your-api-token-here"
-EOF
-
-    echo "Example config file created at $CONFIG_FILE"
+    echo "Please run the install script to create the configuration file."
     exit 1
 fi
 
