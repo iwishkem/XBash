@@ -29,6 +29,7 @@ XBash is a Bash script that uploads an image file to a specified server and copi
 2. **Run the install script**:
 
    ```bash
+   chmod +x install.sh
    ./install.sh
    ```
 
