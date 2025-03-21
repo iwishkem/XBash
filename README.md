@@ -22,7 +22,7 @@ XBash is a Bash script that uploads an image file to a specified server and copi
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/XBash.git
+   git clone https://github.com/iwishkem/XBash.git
    cd XBash
    ```
 
