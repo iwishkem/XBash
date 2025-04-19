@@ -4,7 +4,7 @@ CONFIG_FILE="$HOME/.config/XBash/config.cfg"
 LOG_DIRECTORY="$HOME/.config/XBash"
 LOG="$LOG_DIRECTORY/XBash.log"
 show_gui=false
-VERSION="1.0.1"
+VERSION="1.0.2"
 
 while [[ $# -gt 0 ]]; do
     case $1 in

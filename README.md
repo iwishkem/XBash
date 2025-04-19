@@ -21,9 +21,13 @@ XBash is a Bash script that uploads an image file to a specified server and copi
 
 The script supports the following Linux distributions for automatic package installation:
 
-- Ubuntu/Debian (via `apt-get`)
-- Fedora/CentOS/RHEL (via `yum`)
-- Arch Linux (via `pacman`)
+- Ubuntu/Debian/Linux Mint/Pop!_OS/Elementary OS (via `apt-get`)
+- Fedora/CentOS/RHEL/Rocky/AlmaLinux (via `yum`)
+- Arch/Manjaro/EndeavourOS/Garuda (via `pacman`)
+- openSUSE/SUSE (via `zypper`)
+- Void Linux (via `xbps-install`)
+- Alpine Linux (via `apk`)
+- Gentoo (via `emerge`)
 
 For unsupported distributions, you must manually install the required packages.
 
