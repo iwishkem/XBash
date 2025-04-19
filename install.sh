@@ -6,26 +6,43 @@ if [[ "$(uname -s)" == "Linux" ]]; then
     if [ -f /etc/os-release ]; then
         . /etc/os-release
         case "$ID" in
-            ubuntu|debian)
+            ubuntu|debian|linuxmint|pop|elementary)
                 echo "Detected $ID. Installing required packages..."
                 sudo apt-get update
                 sudo apt-get install -y curl jq xclip zenity
                 ;;
-            fedora|centos|rhel)
+            fedora|centos|rhel|rocky|almalinux)
                 echo "Detected $ID. Installing required packages..."
                 sudo yum install -y curl jq xclip zenity
                 ;;
-            arch)
-                echo "Detected Arch Linux. Installing required packages..."
+            arch|manjaro|endeavouros|garuda)
+                echo "Detected $ID. Installing required packages..."
                 sudo pacman -Syu --noconfirm curl jq xclip zenity
                 ;;
+            opensuse*|suse)
+                echo "Detected $ID. Installing required packages..."
+                sudo zypper install -y curl jq xclip zenity
+                ;;
+            void)
+                echo "Detected Void Linux. Installing required packages..."
+                sudo xbps-install -S curl jq xclip zenity
+                ;;
+            alpine)
+                echo "Detected Alpine Linux. Installing required packages..."
+                sudo apk add curl jq xclip zenity
+                ;;
+            gentoo)
+                echo "Detected Gentoo. Installing required packages..."
+                sudo emerge --ask net-misc/curl app-text/jq x11-misc/xclip gnome-extra/zenity
+                ;;
             *)
-                echo "Unsupported Linux distribution: $ID. Please install 'curl', 'xclip', 'zenity' and 'jq' manually."
+                echo "Unsupported Linux distribution: $ID. Please install 'curl', 'jq', 'xclip', and 'zenity' manually."
                 ;;
         esac
     else
-        echo "Unable to detect Linux distribution. Please install 'curl', 'xclip', 'zenity' and 'jq' manually."
+        echo "Unable to detect Linux distribution. Please install 'curl', 'jq', 'xclip', and 'zenity' manually."
     fi
+fi
 
 mkdir -p "$HOME/.local/bin"
 cp xbash.sh "$HOME/.local/bin/xbash"
