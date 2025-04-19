@@ -1,31 +1,27 @@
 # XBash Image Uploader
 
-XBash is a Bash script that uploads an image file to a specified server and copies the generated URL to the clipboard.
+XBash is a Python script that uploads an image file to a specified server and copies the generated URL to the clipboard.
 
 ## Features
 
-- Checks for a configuration file (`config.cfg`), creates a sample one if not found.
+- Checks for a configuration file (`config.json`), creates a sample one if not found.
 - Uploads an image to a specified URL, using the URL and token provided in the configuration.
-- Copies the upload link to the clipboard and displays the link via a Zenity dialog.
+- Copies the upload link to the clipboard.
 - Logs all uploaded image URLs and deletion links.
 
 ## Requirements
 
-- `bash` (version 4.0 or later)
-- `curl` - for uploading the image
-- `jq` - for parsing JSON responses
-- `xclip` - for copying to the clipboard
-- `zenity` - for GUI dialogs
+- Python 3.6 or later
+- `requests` - for HTTP requests
+- `xclip` (Linux) or equivalent clipboard utility for your OS
 
-### Supported Linux Distributions
+### Supported Platforms
 
-The script supports the following Linux distributions for automatic package installation:
+The script supports the following platforms:
 
-- Ubuntu/Debian (via `apt-get`)
-- Fedora/CentOS/RHEL (via `yum`)
-- Arch Linux (via `pacman`)
-
-For unsupported distributions, you must manually install the required packages.
+- Linux (requires `xclip` for clipboard functionality)
+- macOS (uses `pbcopy` for clipboard functionality)
+- Windows (uses `clip` for clipboard functionality)
 
 ## Installation
 
@@ -36,46 +32,39 @@ For unsupported distributions, you must manually install the required packages.
    cd XBash
    ```
 
-2. **Run the install script**:
+2. **Install dependencies**:
 
    ```bash
-   chmod +x install.sh
-   ./install.sh
+   pip install -r requirements.txt
    ```
 
-   This will:
-   - Install required packages (`curl`, `jq`, `xclip`, `zenity`) based on your Linux distribution.
-   - Copy the script to `$HOME/.local/bin/xbash`.
-   - Create a configuration file at `$HOME/.config/XBash/config.cfg` if it doesn't already exist.
-   - Automatically add $HOME/.local/bin to your PATH if it is not already included.
+3. **Run the script**:
+
+   ```bash
+   python xbash.py <image_path>
+   ```
 
 ## Usage
 
 Run the script with the following syntax:
 
 ```bash
-xbash <image_path>
-```
-
-For GUI mode:
-
-```bash
-xbash --gui <image_path>
+python xbash.py <image_path>
 ```
 
 To check the version:
 
 ```bash
-xbash --version
+python xbash.py --version
 ```
 
-If this is the first time running the script, it will generate a configuration file at `$HOME/.config/XBash/config.cfg` instead of uploading the image.
+If this is the first time running the script, it will generate a configuration file at `$HOME/.config/XBash/config.json` instead of uploading the image.
 
 ## Configuration
 
 ### Customizing Configuration
 
-You can modify `config.cfg` to set your own `UPLOAD_URL` and `TOKEN` values.
+You can modify `config.json` to set your own `UPLOAD_URL` and `TOKEN` values.
 
 - `UPLOAD_URL`: The server URL to which files will be uploaded.
 - `TOKEN`: Your API token for authentication (if required).
